@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Migi Bell</title>
+    <meta charset="utf-8">
+    <style type="text/css">
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #ffffff;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 99999;
+        }
+
+        nav li {  
+            display: inline;
+        }
+
+        nav ul li a {
+            color: #808080;
+            text-decoration: none;
+            font-size: 16px;
+            font-family: Arial, sans-serif;
+            float: right;
+            width: 100%;
+            margin-top: 40px;
+        }
+
+        nav ul li b {
+            color: #3f1f6f;
+            text-decoration: none;
+            font-size: 24px;
+            font-family: Didot, serif;
+            font-style: italic;
+            float: left;
+            padding-left: 163px;
+            width: 100%;
+            font-weight: lighter;
+        }
+
+        .navbarText {
+            width:1241px;
+            height:86px;
+            display: table;
+            table-layout: fixed;
+            margin:0;
+            border-collapse:collapse;
+
+        }
+
+        .navbarText li {
+            display: table-cell;
+            width: 100%;
+            margin: 0px;
+            text-align: right;
+        }
+
+        .parallax_backimg1 {
+        background-image: url("coffee2.jpg");
+        background-attachment: fixed;
+        background-repeat: no-repeat;
+        background-position: -385px -50px;
+        background-size: 2020px 1260px;
+        width: 1241px;
+        height: 948px;
+        margin: 0;
+        }
+
+        .parallax_backimg2 {
+        background-image: url("coffee1.jpg");
+        background-attachment: fixed;
+        background-repeat: no-repeat;
+        background-position: -480px -50px;
+        background-size: 2180px 1227px;
+        height: 948px;
+        margin: 0;
+        }
+
+        .parallax{
+            perspective: 1px;
+            height: 100vh;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+
+        .parallax-layer{
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+        }
+        .parallax-layer_base1{
+          transform: translateZ(0px) scale(1);
+          z-index: 2;
+        }
+        .parallax-layer_base2{
+          transform: translateZ(0px) scale(1);
+          z-index: 3;
+        }
+        .parallax-layer_back1{
+          transform: translateZ(-4px) scale(5);
+          height: 948px;
+          z-index: -3;
+        }
+        .parallax-layer_back2{
+          transform: translateZ(-0.5px) scale(1.5);
+          z-index: -2;
+        }
+
+    </style>
+</head>
+
+<body style="width:1241px; margin: 0 auto; overflow: hidden;">
+    <!-- navbar -->
+    <div title="navbar" style="margin-left: 0px; margin-right: 0px;">
+        <nav>
+            <ul class="navbarText">
+                <li style="width: 120px;"><b href="OmG_HW3.html#home">Migi Bell</b></li>
+                <li><a href="OmG_HW3.html#home">HOME</a></li>
+                <li style="width: 118px; padding-right: 14px;"><a href="OmG_HW3.html#portfolio">PORTFOLIO</a></li>
+                <li style="width: 100px; padding-right: 15px;"><a href="OmG_HW3.html#about_me">ABOUT ME</a></li>
+                <li style="width: 120px; padding-right: 190px;"><a href="OmG_HW3.html#contact_me">CONTACT ME</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <div class="parallax">
+        <div class="parallax-layer parallax-layer_back1">
+            <!-- background 1 -->
+            <div style="width: 1241px; height: 949px; overflow: hidden">
+                <img src="http://csci571.com/hw/hw3/images/coffee2.jpg" style="margin-top: -50px; margin-left: -385px; width: 2020px; height: 1260px;">
+            </div>
+        </div>
+
+        <div class="parallax-layer parallax-layer_base1">
+            <!-- profile -->
+            <div title="profile" style="width: 608px; height: 328px; margin-left: 317px; margin-top: 350px; background-color: #ffffff; overflow-x: hidden;">
+                <div style="width:40%; float:left;">
+                    <p style="margin-top: 49px; margin-left: 41px; width: 181px; height: 227px; overflow: hidden;"><img src="http://csci571.com/hw/hw3/images/face.jpg" style="margin: -18px -1px;  width:100%;"></p>
+                </div>
+                <div style="width:50%; float:left;">
+                    <p style="margin-top: 49px; margin-left: 10px; font-family: Didot, serif; color: #3f1f6f; font-size: 18px; font-style: italic;">Migi Bell</p>
+                    <p style="margin-top: -12px; margin-left: 10px; font-family: Lucida Sans Unicode, sans-serif; font-weight: lighter; color: #3f1f6f; font-size: 44px;">FOOD</p>
+                    <p style="margin-top: -45px; margin-left: 10px; font-family: Lucida Sans Unicode, sans-serif; font-weight: bold; color: #3f1f6f; font-size: 58px;">STYLIST.</p>
+                    <hr width=78px size=6px color=#3f1f6f noshade style="margin-left: 10px; margin-top: -30px">
+                    <p style="margin-top: 38px; margin-left: 10px; font-family: Arial, sans-serif; color: #3f1f6f; font-size: 22px;">PORTFOLIO ></p>
+                </div>     
+            </div>
+
+            <!-- projects -->
+            <div title="projects" style="margin-top: 271px; overflow: hidden;">
+                <div title="project1" style="float: left; width:408px; height: 735px; background-color: #488cb0;">
+                    <p style="font-family: Arial, sans-serif; margin-top: 325px; margin-left: 47px; color: #ffffff; font-size: 15px;">PROJECTS</p>
+                    <p style="font-family: Arial, sans-serif; font-weight: bold; margin-top: 2px; margin-left: 47px; color: #ffffff; font-size: 25px;">PROJECTS ></p>
+                </div>
+                <div title="project1" style="float: left; width:409px; height: 735px; background-color: #3f1f6f;">
+                    <p style="font-family: Arial, sans-serif; margin-top: 325px; margin-left: 47px; color: #ffffff; font-size: 15px;">PROJECTS</p>
+                    <p style="font-family: Arial, sans-serif; font-weight: bold; margin-top: 2px; margin-left: 47px; color: #ffffff; font-size: 25px;">EDITORIAL ></p>
+                </div>
+                <div title="project1" style="float: left; width:424px; height: 735px; background-color: #8e5bb8;">
+                    <p style="font-family: Arial, sans-serif; margin-top: 325px; margin-left: 47px; color: #ffffff; font-size: 15px;">PROJECTS</p>
+                    <p style="font-family: Arial, sans-serif; font-weight: bold; margin-top: 2px; margin-left: 47px; color: #ffffff; font-size: 25px;">INNOVATIVE ></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="parallax-layer parallax-layer_back2">
+            <!-- background 2 -->
+            <div style="width: 1241px; height: 900px;">
+                <img src="http://csci571.com/hw/hw3/images/coffee1.jpg" style="margin-top: 1000px; margin-left: -490px; padding-top: 50px; width: 2200px; height: 1100px;">
+            </div>       
+        </div>
+
+        <div class="parallax-layer parallax-layer_base2">
+            <!-- hello -->
+            <div title="hello" style="width: 1241px; height: 653px; margin-top: 2100px; background-color: #3f1f6f; overflow-x: hidden;">
+                <p style="font-family: Arial, sans-serif; font-weight: bold; margin-top: 193px; margin-left: 150px; color: #ffffff; font-size: 15px;">- Hello -</p>
+                <p style="font-family: Lucida Sans Unicode, sans-serif; font-weight: lighter; margin-top: 35px; margin-left: 161px; color: #ffffff; font-size: 45.5px;">Lorem ipsum dolor sit amet, consectetur</p>
+                <p style="font-family: Lucida Sans Unicode, sans-serif; font-weight: lighter; margin-top: -40px; margin-left: 161px; color: #ffffff; font-size: 45.5px;">adipiscing elit, sed do eiusmod tmpor</p>
+                <p style="font-family: Lucida Sans Unicode, sans-serif; font-weight: lighter; margin-top: -40px; margin-left: 161px; color: #ffffff; font-size: 45.5px;">incididunt ut labore et dolore magna aliqua.</p>
+            </div>
+
+            <!-- footer -->
+            <footer>
+                <div title="footer" style="background-color: #ffffff; height: 585px; width:50%; float:left;">
+                    <p style="font-family: Arial, sans-serif; font-weight: bold; padding-top: 122px; margin-left: 150px; color: #3f1f6f; font-size: 16px;">- Get In Touch -</p>
+                    <p style="font-family: Lucida Sans Unicode, sans-serif; font-weight: lighter; margin-top: 25px; margin-left: 160px; color: #3f1f6f; font-size: 42px;">Contact Me</p>
+                    <p style="font-family: Arial, sans-serif; margin-top: -35px; margin-left: 161px; color: #3f1f6f; font-size: 14px;">700 Morey Francois Street, San Francisco, CA 94148</p>
+                    <p style="font-family: Arial, sans-serif; margin-top: -5px; margin-left: 161px; color: #3f1f6f; font-size: 14px;">info@lorem.com | Tel: 123-555-1212</p>
+                    <p style="font-family: Arial, sans-serif; padding-top: 123px; margin-left: 161px; color: #3f1f6f; font-size: 14px;">© 2023 by Migi Bell.</p>
+                </div>
+                <div title="footer2" style="background-color: #ffffff; height: 585px; width:50%; float:left;">
+                    <input type="text" placeholder="  Name" style="margin-top: 190px; margin-left: -14px; font-size: 16px; width: 467px; height: 26px; color: #3f1f6f; border-color: #3f1f6f; border-width: 1.2px;">
+                    <input type="email" placeholder="  Email" style="margin-top: 5px; margin-left: -14px; font-size: 16px; width: 467px; height: 26px; color: #3f1f6f; border-color: #3f1f6f; border-width: 1.2px;">
+                    <input type="text" placeholder="  Phone" style="margin-top: 5px; margin-left: -14px; font-size: 16px; width: 467px; height: 26px; color: #3f1f6f; border-color: #3f1f6f; border-width: 1.2px;">
+                    <input type="text" placeholder="   Type your message here..." style="margin-top: 5px; margin-left: -14px; font-size: 16px; width: 467px; height: 39px; padding-bottom:86px; color: #3f1f6f; border-color: #3f1f6f; border-width: 1.2px;" />
+                     <li style="margin-left: 357px; margin-top: 20px; list-style: none;"><a href="#" style="font-size: 19px; padding-left: 24px; padding-right: 24px; padding-top: 8px; padding-bottom: 7px; background-color: #3f1f6f; color: #ffffff; font-style: italic; text-decoration: none;">Submit</a></li>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+</body>
+</html>
