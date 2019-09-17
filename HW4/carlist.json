@@ -1,0 +1,118 @@
+{
+  "Mainline": {
+    "Table": {
+      "Header": {
+        "Data": [
+          "Rank",
+          "Group",
+          "Country",
+          "Vehicles",
+          "Wiki Page",
+          "Logo"
+        ]
+      },
+      "Row": [
+          
+        {
+          "Rank": "1",
+          "Group": "Toyota",
+          "Hubs": {
+            "Hub": [
+              "Japan",
+              "Toyota Motor Corporation is a Japanese multinational automotive manufacturer headquartered in Toyota, Aichi, Japan. In 2017, Toyota's corporate structure consisted of 364,445 employees worldwide and, as of September 2018, was the sixth-largest company in the world by revenue. "
+            ]
+          },
+          "Vehicles": "10,466,051",
+          "HomePage": "https://en.wikipedia.org/wiki/Toyota",
+          "Logo": "http://csci571.com/hw/hw4/toyota.jpg"
+        },
+          
+        {
+          "Rank": "2",
+          "Group": "Volkswagen Group",
+          "Hubs": {
+            "Hub": [
+              "Germany",
+              "Volkswagen AG, known internationally as the Volkswagen Group, is a German multinational automotive manufacturing company headquartered in Wolfsburg, Lower Saxony, Germany and indirectly majority owned by Porsche SE. It designs, manufactures and distributes passenger and commercial vehicles, motorcycles, engines, and turbomachinery and offers related services including financing, leasing and fleet management."
+            ]
+          },
+          "Vehicles": "10,382,334",
+          "HomePage": "https://en.wikipedia.org/wiki/Volkswagen_Group",
+          "Logo": "http://csci571.com/hw/hw4/volkswagen.jpg"
+        },  
+          
+          
+        {
+          "Rank": "3",
+          "Group": "Hyundai / Kia",
+          "Hubs": {
+            "Hub": [
+              "South Korea",
+              "The Hyundai Motor Group is a South Korean multinational conglomerate headquartered in Seoul, South Korea, and it is the largest car manufacturer in the country. "
+            ]
+          },
+          "Vehicles": "7,218,391",
+          "HomePage": "https://en.wikipedia.org/wiki/Hyundai_Motor_Group",
+          "Logo": "http://csci571.com/hw/hw4/hyundai.jpg"
+        },          
+          
+        {
+          "Rank": "4",
+          "Group": "General Motors",
+          "Hubs": {
+            "Hub": [
+              "United States",
+              "General Motors Company, commonly referred to as General Motors (GM), is an American multinational corporation headquartered in Detroit that designs, manufactures, markets, and distributes vehicles and vehicle parts, and sells financial services, with global headquarters in Detroit's Renaissance Center. It was originally founded by William C. Durant on September 16, 1908 as a holding company."
+            ]
+          },
+          "Vehicles": "6,856,880",
+          "HomePage": "https://en.wikipedia.org/wiki/General_Motors",
+          "Logo": "http://csci571.com/hw/hw4/GM.jpg"
+        }, 
+          
+        {
+          "Rank": "5",
+          "Group": "Ford",
+          "Hubs": {
+            "Hub": [
+              "United States",
+              "Ford Motor Company is an American multinational automaker that has its main headquarters in Dearborn, Michigan, a suburb of Detroit. It was founded by Henry Ford and incorporated on June 16, 1903. The company sells automobiles and commercial vehicles under the Ford brand and most luxury cars under the Lincoln brand. Ford also owns Brazilian SUV manufacturer Troller, an 8% stake in Aston Martin of the United Kingdom and a 32% stake in Jiangling Motors."
+            ]
+          },
+          "Vehicles": "6,856,880",
+          "HomePage": "https://en.wikipedia.org/wiki/Ford_Motor_Company",
+          "Logo": "http://csci571.com/hw/hw4/ford.jpg"
+        },  
+          
+        {
+          "Rank": "6",
+          "Group": "Nissan",
+          "Hubs": {
+            "Hub": [
+              "Japan",
+              "Nissan Motor Co., Ltd. is a Japanese multinational automobile manufacturer headquartered in Nishi-ku, Yokohama. The company sells its cars under the Nissan, Infiniti, and Datsun brands with in-house performance tuning products labelled Nismo. The company traces its name to the Nissan zaibatsu, now called Nissan Group."
+            ]
+          },
+          "Vehicles": "5,769,277",
+          "HomePage": "https://en.wikipedia.org/wiki/Nissan",
+          "Logo": "http://csci571.com/hw/hw4/nissan.jpg"
+        },     
+        
+        {
+          "Rank": "7",
+          "Group": "Honda",
+          "Hubs": {
+            "Hub": [
+              "Japan",
+              "Honda Motor Company, Ltd. is a Japanese public multinational conglomerate corporation primarily known as a manufacturer of automobiles, motorcycles, and power equipment. Honda has been the world's largest motorcycle manufacturer since 1959, as well as the world's largest manufacturer of internal combustion engines measured by volume, producing more than 14 million internal combustion engines each year."
+            ]
+          },
+          "Vehicles": "5,235,842",
+          "HomePage": "https://en.wikipedia.org/wiki/Honda",
+          "Logo": "http://csci571.com/hw/hw4/honda.jpg"
+        }    
+        
+      ]
+    }
+  }
+}

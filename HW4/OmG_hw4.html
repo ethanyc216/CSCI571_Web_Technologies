@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Homework 4</title>
+    <meta charset="utf-8">
+    <script type="text/javascript">
+
+        function viewJSON(what){
+            var URL = what.URL.value; 
+
+            if (URL == "") {
+                window.alert("The input is blank, please put the JSON file path!");
+                return;
+            }
+
+
+            function loadJSON(url) {
+                xmlhttp = new XMLHttpRequest();
+                xmlhttp.open("GET", url, false); // "synchronous” (deprecated because it freezes the page while waiting for a response) *
+                xmlhttp.send();
+                if (xmlhttp.status == 404) {
+                    window.alert("The JSON file does not exist.");
+                    return;
+                }
+                jsonObj = JSON.parse(xmlhttp.responseText);
+                return jsonObj;
+            }
+
+
+            function generateHTML(jsonObj) {
+                root = jsonObj.DocumentElement;
+                html_text = "<html><head><title>Largest manufacturers by production (2017)</title></head><body>";
+                html_text += "<table border='2'>";
+                tables = jsonObj.Mainline.Table; // an array of cars
+                companies = tables.Row;
+                html_text += "<tbody>";
+                html_text += "<tr>";
+                x = 300; y = 300;
+                // output the headers
+                html_text += '<tr style="text-align: center">';
+                //var header_keys = Object.keys(companies);
+                for (i=0; i<tables.Header.Data.length; i++) {
+                    html_text += '<td><b>'+ tables.Header.Data[i] +'</b></td>';
+                }
+                html_text += "</tr>";
+
+                if (companies == undefined) {
+                    window.alert("The JSON file contains NO car manufacturers!");
+                    html_text += "</tbody>"; 
+                    html_text += "</table>";           
+                    html_text += "</body></html>"; 
+                    return;
+                }
+
+                // output out the values
+                for (i=0; i< companies.length; i++) { //do for all planes (one per row)
+                    headers = companies[i]; //get properties of a plane (an object)
+                    html_text += "<tr>"; //start a new row of the output table
+                    var headers_keys = Object.keys(headers);
+                    for (j=0; j<headers_keys.length; j++) {
+                        prop = headers_keys[j];
+                        if (prop == "Hubs") {
+                            html_text+='<td><ul>';
+                            hubs = headers[prop].Hub;
+                            var country = true;
+                            for (hub in hubs) {
+                                if (country == true) { 
+                                    html_text += '<li><b>'+ hubs[hub] +'</b></li>';
+                                    country = false;
+                                } else {
+                                    html_text += '<li>'+ hubs[hub] +'</li>';
+                                }
+                            }  
+                            html_text+='</ul></td>';
+
+                        } else if (prop == "HomePage") {
+                            //link = headers[prop].replace(/^"(.*)"$/, '$1');
+                            link = headers[prop];
+                            html_text += "<td><a href="+ headers[prop] +">"+ link +"</td>";
+
+                        } else if (prop == "Logo") { //handle images separately
+                            html_text += "<td><img src='"+ headers[prop] +"' width='"+ x +"' height='"+ y +"'></td>";
+
+                        } else {
+                            html_text += "<td>"+ headers[prop] +"</td>";
+                        }
+                    }
+                    html_text += "</tr>";
+                }
+                html_text+="</tbody>"; 
+                html_text+="</table>";
+                html_text+="</body></html>";
+            }
+
+
+            jsonObj = loadJSON(URL);
+            jsonObj.onload = generateHTML(jsonObj);
+            hWin = window.open("", "Assignment4", "height=800,width=1200");
+            hWin.document.write(html_text);
+            hWin.document.close(); 
+        }
+
+    </script>
+</head>
+
+<body style="margin: 0 auto;">
+    <br><br><br><br><br><br><br><br>
+    <center>
+        <h2>Enter URL for Largest manufacturers by production (2017) List JSON File</h2>
+        <form name="myform" method="POST" id="location">
+        <input style="width: 200px" type="text" name="URL" maxlength="255" size="100" value=""></input>
+        <br><br>
+        <input type="button" name="submit" value="Submit Query" onClick="viewJSON(this.form)"></input>
+        </form>
+    </center>
+</body>
+</html>
