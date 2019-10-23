@@ -1,0 +1,18 @@
+google API key
+AIzaSyBSDUpJbxH_8u5SyNgPR76wEqoirG0yKhg
+
+darkskey API key
+a852f76c14e853fb9de2b2aaac7e1dd5
+
+https://api.forecast.io/forecast/a852f76c14e853fb9de2b2aaac7e1dd5/34.0322,-118.2836?exclude=minutely,hourly,alerts,flags
+
+http://ip-api.com/json
+
+https://maps.googleapis.com/maps/api/geocode/xml?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=AIzaSyBSDUpJbxH_8u5SyNgPR76wEqoirG0yKhg
+
+https://maps.googleapis.com/maps/api/geocode/xml?address=1729+1/2+w+adams+blvd,+la,+CA&key=AIzaSyBSDUpJbxH_8u5SyNgPR76wEqoirG0yKhg
+
+https://maps.googleapis.com/maps/api/geocode/json?latlng=40.714224,-73.961452&key=YOUR_API_KEY
+
+
+https://api.darksky.net/forecast/a852f76c14e853fb9de2b2aaac7e1dd5/[LATITUDE],[LONGITUDE],[TIME]?exclude=minutely
