@@ -393,7 +393,12 @@ function get_details($url) {
 
     function sunTime(unixtime, offset) {
         s = new Date(unixtime*1000).toUTCString("en-US").split(":")[0].split(" ")[4]
-        return parseInt(s)+offset;
+        if (parseInt(s)+offset < 0) {
+          return 24+parseInt(s)+offset;
+        }
+        else {
+          return parseInt(s)+offset;
+          };
     };
 
     function show_result(results) {
