@@ -80,20 +80,22 @@ function get_details($url) {
 
         .arrow_up {
             display: block;
-            height: 30px;
+            cursor: pointer;
+            height: 50px;
             width: 50px;
-            margin: auto;
+            margin: -20px auto;
             background-size: 100%;
-            background-image: url("http://csci571.com/hw/hw6/images/arrow_up.png");
+            background-image: url("https://cdn4.iconfinder.com/data/icons/geosm-e-commerce/18/point-up-512.png");
         }
 
         .arrow_down {
             display: block;
-            height: 30px;
+            cursor: pointer;
+            height: 50px;
             width: 50px;
-            margin: auto;
+            margin: -20px auto;
             background-size: 100%;
-            background-image: url("http://csci571.com/hw/hw6/images/arrow_down.png");
+            background-image: url("https://cdn4.iconfinder.com/data/icons/geosm-e-commerce/18/point-down-512.png");
         }
 
         #formbox {
@@ -194,7 +196,7 @@ function get_details($url) {
                 <label for="state"><b>State&nbsp</b></label>
                 <select name="state" id="state">
                     <option value="State">State</option>
-                    <option value="dashline">----------------------------------------------</option>
+                    <optgroup label="----------------------------------------------"></optgroup>
                     <option value="AL">Alabama</option>
                     <option value="AK">Alaska</option>
                     <option value="AZ">Arizona</option>
