@@ -388,12 +388,12 @@ function get_details($url) {
 
     function unixTime(unixtime) {
         var u = new Date(unixtime*1000);
-          return u.getUTCFullYear() + '-' + ('0' + (u.getUTCMonth()+1)).slice(-2) + '-' + ('0' + u.getUTCDate()).slice(-2)
+          return u.getUTCFullYear() + '-' + ('0' + (u.getUTCMonth()+1)).slice(-2) + '-' + ('0' + u.getUTCDate()).slice(-2);
     };
 
-    function sunTime(unixtime) {
-        s = new Date(unixtime*1000).toLocaleTimeString("en-US").split(":")
-        return s[0]
+    function sunTime(unixtime, offset) {
+        s = new Date(unixtime*1000).toUTCString("en-US").split(":")[0].split(" ")[4]
+        return parseInt(s)+offset;
     };
 
     function show_result(results) {
@@ -665,7 +665,8 @@ function get_details($url) {
 
       data.addRows(temperatures);
       var options = {
-        'width': 600,
+        'width': 700,
+        colors: ['#9ed1da'],
         hAxis: {
           title: 'Time',
           ticks: [0, 5, 10, 15, 20],
@@ -722,7 +723,7 @@ function get_details($url) {
         
         var th = table.insertRow();
         var thc = document.createElement("td");
-        thc.setAttribute("style", "text-align: left; font-size: 30px; font-weight: bolder; padding-left: 20px; padding-top: 40px; width: 240px;");
+        thc.setAttribute("style", "text-align: left; font-size: 30px; font-weight: bolder; padding-left: 20px; padding-top: 60px; width: 240px;");
         thc.innerHTML = "<b>"+summaryValue+"</b>";
         th.appendChild(thc);
 
@@ -817,8 +818,8 @@ function get_details($url) {
         var thc = document.createElement("td");
         thc.setAttribute("style", "text-align: left; padding-bottom: 20px;");
         thc.setAttribute("colspan", "2");
-        sunriseTime = sunTime(sunriseValue);
-        sunsetValue = sunTime(sunsetValue);
+        sunriseTime = sunTime(sunriseValue, details["offset"]);
+        sunsetValue = sunTime(sunsetValue, details["offset"])-12;
         thc.innerHTML = "<span style = 'font-size: 20px; font-weight: bolder; padding-left: 173px; padding-top: 0px;'>Sunrise / Sunset: </span><span style = 'font-size: 24px; font-weight: bolder;'>"+sunriseTime+"</span><span style = 'font-size: 16px; font-weight: bolder;'> AM/ </span><span style = 'font-size: 24px; font-weight: bolder;'>"+sunsetValue+"</span><span style = 'font-size: 16px; font-weight: bolder;'> PM</span>";
         th.appendChild(thc);
         table.appendChild(th);
@@ -839,7 +840,7 @@ function get_details($url) {
         chart_div.id = "chart_div";
         chart_div.className = "chart_div";
         arrow_div.onclick = show_chart;
-        chart_div.setAttribute("style", "width: 600px; margin: auto; display: none;");
+        chart_div.setAttribute("style", "width: 700px; margin: auto; display: none;");
         google.charts.load('current', {packages: ['corechart', 'line']});
         google.charts.setOnLoadCallback(drawBasic);
         result_div.appendChild(chart_div);
