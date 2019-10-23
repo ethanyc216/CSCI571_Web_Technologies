@@ -388,11 +388,11 @@ function get_details($url) {
 
     function unixTime(unixtime) {
         var u = new Date(unixtime*1000);
-          return u.getUTCFullYear() + '-' + ('0' + u.getUTCMonth()).slice(-2) + '-' + ('0' + u.getUTCDate()).slice(-2)
+          return u.getUTCFullYear() + '-' + ('0' + (u.getUTCMonth()+1)).slice(-2) + '-' + ('0' + u.getUTCDate()).slice(-2)
     };
 
     function sunTime(unixtime) {
-        s = new Date(unixtime).toLocaleTimeString("en-US").split(":")
+        s = new Date(unixtime*1000).toLocaleTimeString("en-US").split(":")
         return s[0]
     };
 
