@@ -1,0 +1,14 @@
+i.material-icons {
+    top: -1px;
+    vertical-align: middle;
+    position: relative;
+}
+
+.control-label.col-sm-2 {
+    text-align: left;
+}
+
+.form-group.required .control-label:after {
+    content:"*";
+    color:red;
+}

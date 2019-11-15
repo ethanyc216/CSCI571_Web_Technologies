@@ -1,0 +1,296 @@
+<html>
+<head>
+    <title>Weather Search</title>
+    <meta charset="utf-8">
+
+    <style>
+
+    i.material-icons {
+        top: -1px;
+        vertical-align: middle;
+        position: relative;
+    }
+
+    .btn-light {
+        background-color: transparent;
+        border-color: #cccccc;
+    }
+
+    tr.selected {
+        background-color: #FFCF8B
+    }
+
+    .control-label.col-sm-2 {
+        text-align: left;
+    }
+
+    .form-group.required .control-label:after {
+        content:"*";
+        color:red;
+    }
+
+
+    tr.upco_border td {
+        border: 1px solid lightgray;
+    }
+
+    #list_autocomplete {
+        cursor:pointer;
+    }
+
+    #list_order:hover {
+        text-decoration:underline;
+        color:blue;
+    }
+
+    .upco_table {
+        border:none;
+        border-collapse: separate;
+        border-spacing: 15px;
+        transition: ease-in-out 0.5s;
+    }
+
+
+    .btn_width {
+        width:100px;
+    }
+
+    .fa-star {
+        color:yellow;
+    }
+
+    #test {
+        text-overflow: ellipsis;
+        display: block;
+        width: 400px;
+        overflow: hidden;
+        white-space: nowrap;
+    }
+
+    #Details.ng-hide {
+        height:0px;
+        width:auto;
+        top:0;
+        left:-1780px;
+        position: relative;
+        transition: all linear 0s;
+    }
+
+    #Display_results.ng-hide {
+        height:0px;
+        width:auto;
+        top:0;
+        left:1780px;
+        position: relative;
+        transition: all linear 0s; 
+    }
+
+    .detail_positioning {
+        width:auto;
+        height:auto;
+        top: 0;
+        left: 0;
+        transition: all linear 0.5s;
+        position: relative;
+    }
+    
+    .list_positioning {
+        width:auto;
+        height:auto;
+        top: 0;
+        left: 0;
+        transition: all linear 0.5s;
+        position: relative;
+    }
+    #upco_artist:link {
+        text-decoration:none;
+        color:#FF5733;
+    }
+    #upco_artist:hover {
+        text-decoration:none;
+    }
+    #upco_name:hover {
+        text-decoration:underline;
+    }
+    #upco_name:link {
+        color:blue;
+    }
+    </style>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-animate.js"></script>
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src='https://cdn.gitcdn.link/cdn/angular/bower-material/v1.1.10/angular-material.js'></script>
+    <!-- TODO --> 
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBSDUpJbxH_8u5SyNgPR76wEqoirG0yKhg&libraries=places"></script>
+    	
+    <script src="http://jvandemo.github.io/angularjs-google-maps/dist/angularjs-google-maps.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://rawgit.com/allenhwkim/angularjs-google-maps/master/build/scripts/ng-map.js"></script>
+    <script src="angular_functionality.js"></script>
+    <script src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-aria.min.js"></script>
+    <script src = "https://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.js"></script>
+
+    <script>
+        function results() {
+            var result_classList = document.getElementById('result_button').classList;
+            var favorites_classList = document.getElementById('favorites_button').classList;
+            if (favorites_classList.contains('btn-primary')) {
+                favorites_classList.remove("btn-primary");
+                favorites_classList.add("btn-link");
+                result_classList.remove("btn-link");
+                result_classList.add("btn-primary");
+            }
+        }
+
+        function favorites() {
+            var result_classList = document.getElementById('result_button').classList;
+            var favorites_classList = document.getElementById('favorites_button').classList;
+            if (result_classList.contains('btn-primary')) {
+                result_classList.remove("btn-primary");
+                result_classList.add("btn-link");
+                favorites_classList.remove("btn-link");
+                favorites_classList.add("btn-primary");
+            }
+        }
+    </script>
+          
+</head>
+
+<body ng-app="form_app"  ng-init="" ng-controller="body_controller"><br>
+
+    <div class="container border border-dark rounded text-white mb-4" style="background-color: rgb(92,134,162); box-shadow: 5px 5px 5px grey;" >
+        <h2 class="text-center"><br>Weather Search</h2><br>
+        <form name="search_form" class="form-horizontal" ng-submit="search_function()">
+
+            <div class="form-group row justify-content-left required">
+                <label for="Street" class="control-label col-sm-2 offset-sm-2">Street</label>
+                <div class="col-sm-6">
+                    <input type="text" name="street"  class="form-control" placeholder="Enter Street Name" id="Street" ng-required="1" ng-model="user.Street" required>
+                    <span style="color:red" ng-show="search_form.street.$touched && search_form.street.$invalid">Please enter a street</span>
+                </div>
+            </div>
+
+            <div class="form-group row justify-content-left required">
+                <label for="City" class="control-label col-sm-2 offset-sm-2">City</label>
+                <div class="col-sm-6">
+                    <input type="text" name="city"  class="form-control" placeholder="Enter City Name" id="City" ng-required="1" ng-model="user.City" ng-keyup="auto()" required>
+                    <ul class="list-group" ng-model="hide_this" ng-hide="hide_this">
+                        <li id = "list_autocomplete" class="list-group-item list-group-item-action" ng-repeat="cityName in get_autocomplete_details" ng-click="fill_text(cityName.name)">{{cityName.name}}</li>
+                    </ul>
+
+                    <span style="color:red" ng-show="search_form.city.$touched && search_form.city.$invalid">Please enter a city</span>
+                </div>
+            </div>
+
+            <div class="form-group row justify-content-left required">
+                <label for="State" class="control-label col-sm-2 offset-sm-2">State</label>
+                <div class="col-sm-4">
+                    <select class="form-control" id="State" ng-model="user.State" style="-moz-appearance: none;">
+                        <option value="" selected="">Select State</option>
+                        <option value="AL">Alabama</option>
+                        <option value="AK">Alaska</option>
+                        <option value="AZ">Arizona</option>
+                        <option value="AR">Arkansas</option>
+                        <option value="CA">California</option>
+                        <option value="CO">Colorado</option>
+                        <option value="CT">Connecticut</option>
+                        <option value="DE">Delaware</option>
+                        <option value="DC">District Of Columbia</option>
+                        <option value="FL">Florida</option>
+                        <option value="GA">Georgia</option>
+                        <option value="HI">Hawaii</option>
+                        <option value="ID">Idaho</option>
+                        <option value="IL">Illinois</option>
+                        <option value="IN">Indiana</option>
+                        <option value="IA">Iowa</option>
+                        <option value="KS">Kansas</option>
+                        <option value="KY">Kentucky</option>
+                        <option value="LA">Louisiana</option>
+                        <option value="ME">Maine</option>
+                        <option value="MD">Maryland</option>
+                        <option value="MA">Massachusetts</option>
+                        <option value="MI">Michigan</option>
+                        <option value="MN">Minnesota</option>
+                        <option value="MS">Mississippi</option>
+                        <option value="MO">Missouri</option>
+                        <option value="MT">Montana</option>
+                        <option value="NE">Nebraska</option>
+                        <option value="NV">Nevada</option>
+                        <option value="NH">New Hampshire</option>
+                        <option value="NJ">New Jersey</option>
+                        <option value="NM">New Mexico</option>
+                        <option value="NY">New York</option>
+                        <option value="NC">North Carolina</option>
+                        <option value="ND">North Dakota</option>
+                        <option value="OH">Ohio</option>
+                        <option value="OK">Oklahoma</option>
+                        <option value="OR">Oregon</option>
+                        <option value="PA">Pennsylvania</option>
+                        <option value="RI">Rhode Island</option>
+                        <option value="SC">South Carolina</option>
+                        <option value="SD">South Dakota</option>
+                        <option value="TN">Tennessee</option>
+                        <option value="TX">Texas</option>
+                        <option value="UT">Utah</option>
+                        <option value="VT">Vermont</option>
+                        <option value="VA">Virginia</option>
+                        <option value="WA">Washington</option>
+                        <option value="WV">West Virginia</option>
+                        <option value="WI">Wisconsin</option>
+                        <option value="WY">Wyoming</option>                           
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group row justify-content-left">
+                <label for="current_location" class="col-sm-8 offset-sm-2"><input type="checkbox"  class="" name="location" id="current_location" value="current_location" ng-model="location"> Current location</label>
+            </div>
+
+            <div class="form-group row">
+                <div class="control-label col-sm-8 offset-sm-2 mb-4">
+                    <button type="submit" class="btn btn-primary" ng-disabled="(user.Street=='') || (user.City=='') || (user.State=='')">
+                    <i class="material-icons">search</i> Search</button>
+                    <button type="reset" class="btn btn-default" ng-click="reset()">
+                    <i class="material-icons">clear_all</i> Clear</button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+
+    <div class="container text-center">
+        <button id="result_button" class="btn btn-primary" onclick="results()" ng-click="favorites_to_results()">Results</button>
+        <button id="favorites_button"  class="btn btn-link" onclick="favorites()" ng-click="results_to_favorites()">Favorites</button><br>
+    </div>
+ 
+    <div class="progress mt-5" ng-show="progress">
+        <div class="progress-bar progress-bar-striped progress-bar-animated active" style="width:50%"></div>
+    </div>
+
+    <!-- TODO -->
+    <div id="results_page" class="container" ng-hide="!(show_detail==false)">
+
+    <div class="container" ng-show="table_statustext=='INVALID_REQUEST'" >
+        <div class="alert alert-warning">
+            Invalid Address.
+        </div>
+    </div>
+
+    <div class="container" ng-show="table_statustext=='NO_RECORD'" >
+        <div class="alert alert-warning">
+            No records.
+        </div>
+    </div>
+
+
+</body>
+</html>

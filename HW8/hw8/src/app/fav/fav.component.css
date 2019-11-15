@@ -1,0 +1,29 @@
+#favorite-div {
+    overflow: scroll;
+    margin: auto;
+    margin-top: 30px;
+}
+
+.category-icon {
+    width: 40px;
+    height: 40px;
+}
+
+.hide {
+    display: none;
+}
+
+.show {
+    display: block;
+}
+
+.color1 {
+    background-color: rgb(92, 134, 162);
+}
+
+.color2 {
+    background-color: rgb(145, 202, 238);
+}
+
+tr:nth-child(even) {background-color: rgb(92, 134, 162);}
+tr:nth-child(odd) {background-color: rgb(145, 202, 238);}

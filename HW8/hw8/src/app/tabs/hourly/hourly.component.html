@@ -1,0 +1,28 @@
+<div class="container">
+    <form name="hourlyDisForm" class="form-horizontal" [formGroup]="hourlyDisForm">
+        <div class="form-group row justify-content-left">
+            <div class="col-sm-4">
+                <select name="hourlyDis" id="hourlyDis" class='custom-select' formControlName="hourlyDis" (ngModelChange)="onChangesDis()">
+                    <option value="hourlyTemperature" selected="">Temperature</option>
+                    <option value="hourlyPressure">Pressure</option>
+                    <option value="hourlyHumidity">Humidity</option>
+                    <option value="hourlyOzone">Ozone</option>
+                    <option value="hourlyVisibility">Visibility</option>
+                    <option value="hourlyWindSpeed">Wind Speed</option>
+                </select>
+            </div>
+        </div>
+    </form>
+    <br>
+  <div style="display: block">
+    <canvas baseChart
+            [datasets]="barChartData"
+            [labels]="barChartLabels"
+            [options]="barChartOptions"
+            [legend]="barChartLegend"
+            [chartType]="barChartType"
+            [colors]="barChartColors">
+    </canvas>
+  </div>
+</div>
+<br>

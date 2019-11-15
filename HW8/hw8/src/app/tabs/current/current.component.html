@@ -1,0 +1,33 @@
+<div class="container card col-sm-8" style="background-color: rgb(145, 202, 238);">
+  <div class="card-body">
+    <div class="left">
+      <br>
+      <h4 style="color: rgb(30, 33, 36);">{{resultsJson["city"]}}</h4>
+      <h4 style="color: rgb(43, 71, 71);">{{resultsJson["timezone"]}}</h4>
+      <br>
+      <h4 style="color: rgb(30, 33, 36);">{{resultsJson["currentTemperature"]}}<img src="https://cdn3.iconfinder.com/data/icons/virtual-notebook/16/button_shape_oval-512.png" alt="icon" class="category-icon-temp">F</h4>
+      <br>
+      <h6 style="color: rgb(30, 33, 36);">{{resultsJson["currentSummary"]}}</h6>
+    </div>
+
+    <div class="right">
+      <img src="{{resultsJson['seal']}}" class="category-icon-s">
+    </div>
+
+    <div class="table-responsive">
+      <table class="table table-borderless" *ngIf="resultsJson" style="text-align: center;">
+        <tr>
+          <td *ngFor="let icon of icons; index as i">
+            <img src={{icon.iconp}} placement="top" ngbTooltip={{icon.title}} class="category-icon-g" *ngIf="resultsJson[icon.field] != undefined">
+          </td>
+        </tr>
+        <tr>
+          <td *ngFor="let icon of icons; index as i">
+            <p *ngIf="resultsJson[icon.field] != undefined">{{resultsJson[icon.field]}}</p>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>
+<br>

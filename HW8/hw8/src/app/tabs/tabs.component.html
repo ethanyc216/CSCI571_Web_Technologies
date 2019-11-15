@@ -1,0 +1,32 @@
+<div id="resTabs">
+  <div id="details-button">
+    <div class="right">
+      <button class="btn tweet" (click)="tweet()">
+        <img id="tweet" src="https://csci571.com/hw/hw8/Images/Twitter.png" alt="tweet">
+      </button>
+      <button class="btn btn-outline" (click)="setFavorite()" [class.favorited]="isFavorite">
+        <i class="material-icons" >{{stari}}</i>
+      </button>
+    </div>
+  </div>
+  <nav>
+    <div class="nav nav-tabs" id="nav-tabs" role="tablist">
+      <a href="#" *ngFor="let tab of tabs" [id]="tab.id" class="nav-item nav-link" [class.active]="tab.id === activeId" role="tab"
+        data-toggle="tab" [attr.aria-controls]="tab.id+'-panel'" (click)="setActiveId(tab.id)">{{tab.title}}</a>
+    </div>
+  </nav>
+  <br>
+  <div class="tab-content" id="nav-tab-content">
+    <div class="tab-pane" [class.active]="activeId==='current-tab'" role="tabpanel" id="current-tab-panel" aria-labelledby="current-tab">
+      <app-current></app-current>
+    </div>
+
+    <div class="tab-pane" [class.active]="activeId==='hourly-tab'" role="tabpanel" id="hourly-tab-panel" aria-labelledby="hourly-tab">
+      <app-hourly></app-hourly>
+    </div>
+
+    <div class="tab-pane" [class.active]="activeId==='weekly-tab'" role="tabpanel" id="weekly-tab-panel" aria-labelledby="weekly-tab">
+      <app-weekly></app-weekly>
+    </div>
+  </div>
+</div>

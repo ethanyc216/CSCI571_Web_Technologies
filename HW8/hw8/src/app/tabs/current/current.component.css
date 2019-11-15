@@ -1,0 +1,47 @@
+.left {
+  float: left;
+}
+
+.right {
+  float: right;
+}
+
+.category-icon-temp {
+    width: 5px;
+    height: 5px;
+    margin-bottom: 20px;
+}
+
+.category-icon-g {
+    width: 40px;
+    height: 40px;
+}
+
+.category-icon-s {
+    width: 180px;
+    height: 180px;
+    margin-top: 20px;
+}
+
+@media only screen and (max-width: 500px) {
+  
+  h4 {
+    font-size: 15px;
+  }
+  h6 {
+    font-size: 15px;
+  }
+  .category-icon-s {
+    width: 100px;
+    height: 100px;
+    margin-top: 30px;
+  }
+
+  .category-icon-g {
+    width: 14px;
+    height: 14px;
+}
+  p {
+    font-size: 9px;
+  }
+}

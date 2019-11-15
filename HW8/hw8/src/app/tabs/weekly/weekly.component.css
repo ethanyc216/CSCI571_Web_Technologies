@@ -1,0 +1,19 @@
+.class1 {
+  margin-left: 50%;
+}
+
+.imggg {
+  width: 60%; 
+  padding-top: 10%
+}
+
+@media only screen and (max-width: 500px) {
+  
+  .class1 {
+  margin-left: 5%;
+}
+  .imggg {
+  width: 60%; 
+  padding-top: 10%
+}
+}

@@ -1,0 +1,39 @@
+<div id="favorite-div">
+  <div class="alert alert-warning" role="alert" *ngIf="!favorites">
+    No records.
+  </div>
+  <div *ngIf="favorites">
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
+          <tr style="background-color: rgb(92, 134, 162);" align="center">
+            <th scope="col">#</th>
+            <th scope="col">Image</th>
+            <th scope="col">City</th>
+            <th scope="col">State</th>
+            <th scope="col">Wish List</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let favrow of favorites; index as i" align="center">
+            <td>
+              {{i+1}}
+            </td>
+            <td>
+              <img src={{favrow.seal}} alt="icon" class="category-icon">
+            </td>
+            <td>
+              <button type="button" class="btn" (click)="searchf(favrow.lat, favrow.lng, favrow.city, favrow.state)" ngbTooltip={{favrow.city}} placement="bottom"><span style="color: rgb(33, 0, 250">{{favrow.city}}</span></button>
+            </td>
+            <td>{{favrow.state}}</td>
+            <td>
+              <button type="button" class="btn btn-outline" (click)="removeFavorite(favrow.city+favrow.state)" style="background-color: rgb(247, 248, 249);">
+                <i class="material-icons" style="color: rgb(212, 156, 42);">delete</i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,27 @@
+#results-and-favorites {
+    text-align: center;
+    margin: auto;
+    margin-bottom: 50px;
+}
+
+.hide {
+    display: none;
+}
+
+.show {
+    display: block;
+}
+
+.showbtn {
+	background-color: rgb(92, 134, 162);
+	color: rgb(255, 255, 255);
+	border: 1px solid; 
+	border-color: black;
+}
+
+.hidebtn {
+	background-color: white;
+	color: rgb(117, 117, 117);
+	border: 1px solid; 
+	border-color: black;
+}

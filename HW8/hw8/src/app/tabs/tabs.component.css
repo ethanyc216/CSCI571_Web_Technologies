@@ -1,0 +1,47 @@
+#tweet {
+  width: 38px;
+  height: 38px;
+}
+
+.tweet {
+  padding: 0;
+}
+
+.left {
+  float: left;
+}
+
+.right {
+  float: right;
+}
+
+.favorited {
+  color: rgb(253, 208, 58);
+}
+
+.btn-outline {
+  border: 0px;
+  background-color: rgb(247, 248, 249);
+}
+
+@media (max-width: 600px) {
+  .nav-tabs {
+    display: -webkit-inline-box;
+    display: -moz-box;
+  }
+  a {
+    font-size: 14px;
+  }
+}
+
+i.material-icons 
+{
+  top: -1px;
+  vertical-align: middle;
+  position: relative;
+}
+
+.fa-star
+{
+  color:yellow;
+}
