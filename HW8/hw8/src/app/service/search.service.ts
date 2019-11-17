@@ -168,10 +168,10 @@ export class SearchService {
           tmpArrayTemperatureHigh.push(Math.round(data["daily"]["data"][i]['temperatureHigh']));
 
         }
-        tmpJson["weeklyTime"] = tmpArrayDay;
-        tmpJson["weeklyTimeOri"] = tmpArrayDayOri;
-        tmpJson["weeklyTemperatureLow"] = tmpArrayTemperatureLow;
-        tmpJson["weeklyTemperatureHigh"] = tmpArrayTemperatureHigh;
+        tmpJson["weeklyTime"] = tmpArrayDay.reverse();
+        tmpJson["weeklyTimeOri"] = tmpArrayDayOri.reverse();
+        tmpJson["weeklyTemperatureLow"] = tmpArrayTemperatureLow.reverse();
+        tmpJson["weeklyTemperatureHigh"] = tmpArrayTemperatureHigh.reverse();
 
         this.getSeal(this.state).subscribe(data => {
           tmpJson['seal'] = data['items'][0]['link'];
@@ -244,10 +244,10 @@ export class SearchService {
               tmpArrayTemperatureHigh.push(Math.round(data["daily"]["data"][i]['temperatureHigh']));
 
             }
-            tmpJson["weeklyTime"] = tmpArrayDay;
-            tmpJson["weeklyTimeOri"] = tmpArrayDayOri;
-            tmpJson["weeklyTemperatureLow"] = tmpArrayTemperatureLow;
-            tmpJson["weeklyTemperatureHigh"] = tmpArrayTemperatureHigh;
+            tmpJson["weeklyTime"] = tmpArrayDay.reverse();
+            tmpJson["weeklyTimeOri"] = tmpArrayDayOri.reverse();
+            tmpJson["weeklyTemperatureLow"] = tmpArrayTemperatureLow.reverse();
+            tmpJson["weeklyTemperatureHigh"] = tmpArrayTemperatureHigh.reverse();
             
             this.getSeal(this.state).subscribe(data => {
               tmpJson['seal'] = data['items'][0]['link'];
@@ -319,10 +319,10 @@ export class SearchService {
                 tmpArrayTemperatureHigh.push(Math.round(data["daily"]["data"][i]['temperatureHigh']));
 
               }
-              tmpJson["weeklyTime"] = tmpArrayDay;
-              tmpJson["weeklyTimeOri"] = tmpArrayDayOri;
-              tmpJson["weeklyTemperatureLow"] = tmpArrayTemperatureLow;
-              tmpJson["weeklyTemperatureHigh"] = tmpArrayTemperatureHigh;
+              tmpJson["weeklyTime"] = tmpArrayDay.reverse();
+              tmpJson["weeklyTimeOri"] = tmpArrayDayOri.reverse();
+              tmpJson["weeklyTemperatureLow"] = tmpArrayTemperatureLow.reverse();
+              tmpJson["weeklyTemperatureHigh"] = tmpArrayTemperatureHigh.reverse();
               
               this.getSeal(this.state).subscribe(data => {
                 tmpJson['seal'] = data['items'][0]['link'];

@@ -16,7 +16,7 @@
         <div class="form-group row justify-content-left required">
             <label for="city" class="control-label col-sm-2 offset-sm-2">City </label>
             <div class="col-sm-6">
-                <input name="city" id="city" type="text" formControlName="city" class="form-control" [ngClass]="{'is-invalid': f.city.invalid && (f.city.dirty || f.city.touched)}" placeholder="Enter City Name" [matAutocomplete]="auto" (ngModelChange)="onChangesCity()" style="border: 1px solid background-image: none;" />
+                <input name="city" id="city" type="text" formControlName="city" class="form-control" [ngClass]="{'is-invalid': f.city.invalid && (f.city.dirty || f.city.touched)}" placeholder="Enter City Name" [matAutocomplete]="auto" (ngModelChange)="onChangesCity()" style="border: 1px solid; background-image: none;" />
                 <mat-autocomplete #auto="matAutocomplete">
                     <mat-option *ngFor="let city of filteredCities | async" [value]="city">
                         {{city}}
