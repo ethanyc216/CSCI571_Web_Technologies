@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">WeatherApp</string>
+    <string name="title_activity_new_tabs">NewTabsActivity</string>
+    <string name="tab_text_1">TODAY</string>
+    <string name="tab_text_2">WEEKLY</string>
+    <string name="tab_text_3">PHOTOS</string>
+</resources>

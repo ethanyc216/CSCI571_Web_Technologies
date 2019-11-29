@@ -1,0 +1,449 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000000"
+    android:orientation="vertical"
+    android:gravity="center">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="170dp"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/card_wind"
+        android:layout_width="100dp"
+        android:layout_height="150dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginRight="10dp"
+        android:alpha="50"
+        app:cardBackgroundColor="#191919"
+        app:cardCornerRadius="10dp">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:paddingBottom="0dp">
+
+            <ImageView
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginLeft="20dp"
+                android:padding="0dp"
+                app:srcCompat="@drawable/card_wind" />
+
+            <TextView
+                android:id="@+id/card_wind_val"
+                android:layout_width="100dp"
+                android:layout_height="30dp"
+                android:gravity="center"
+                android:layout_marginTop="60dp"
+                android:text="T18.23 mph"
+                android:textAlignment="center"
+                android:textColor="#FFFFFF"
+                android:textSize="16dp" />
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:layout_marginTop="90dp"
+                android:text="Wind Speed"
+                android:textAlignment="center"
+                android:textColor="#8D8D8D"
+                android:textSize="16dp" />
+
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/card_pressure"
+        android:layout_width="100dp"
+        android:layout_height="150dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginRight="10dp"
+        android:alpha="50"
+        app:cardBackgroundColor="#191919"
+        app:cardCornerRadius="10dp">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:paddingBottom="0dp">
+
+            <ImageView
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginLeft="20dp"
+                android:padding="0dp"
+                app:srcCompat="@drawable/card_pressure" />
+
+            <TextView
+                android:id="@+id/card_pressure_val"
+                android:layout_width="100dp"
+                android:layout_height="30dp"
+                android:gravity="center"
+                android:layout_marginTop="60dp"
+                android:text="T1001.60 mb"
+                android:textAlignment="center"
+                android:textColor="#FFFFFF"
+                android:textSize="16dp" />
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:layout_marginTop="90dp"
+                android:text="Pressure"
+                android:textAlignment="center"
+                android:textColor="#8D8D8D"
+                android:textSize="16dp" />
+
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/card_rain"
+        android:layout_width="100dp"
+        android:layout_height="150dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginRight="10dp"
+        android:alpha="50"
+        app:cardBackgroundColor="#191919"
+        app:cardCornerRadius="10dp">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:paddingBottom="0dp">
+
+            <ImageView
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginLeft="20dp"
+                android:padding="0dp"
+                app:srcCompat="@drawable/card_rain" />
+
+            <TextView
+                android:id="@+id/card_rain_val"
+                android:layout_width="100dp"
+                android:layout_height="30dp"
+                android:gravity="center"
+                android:layout_marginTop="60dp"
+                android:text="T0.00 mmph"
+                android:textAlignment="center"
+                android:textColor="#FFFFFF"
+                android:textSize="16dp" />
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:layout_marginTop="90dp"
+                android:text="Precipitation"
+                android:textAlignment="center"
+                android:textColor="#8D8D8D"
+                android:textSize="16dp" />
+
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="170dp"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/card_temperature"
+            android:layout_width="100dp"
+            android:layout_height="150dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginRight="10dp"
+            android:alpha="50"
+            app:cardBackgroundColor="#191919"
+            app:cardCornerRadius="10dp">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="10dp"
+                android:paddingBottom="0dp">
+
+                <ImageView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginLeft="20dp"
+                    android:padding="0dp"
+                    app:srcCompat="@drawable/card_temperature" />
+
+                <TextView
+                    android:id="@+id/card_temperature_val"
+                    android:layout_width="100dp"
+                    android:layout_height="30dp"
+                    android:gravity="center"
+                    android:layout_marginTop="60dp"
+                    android:text="T70F"
+                    android:textAlignment="center"
+                    android:textColor="#FFFFFF"
+                    android:textSize="16dp" />
+
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="40dp"
+                    android:gravity="center"
+                    android:layout_marginTop="90dp"
+                    android:text="Temperature"
+                    android:textAlignment="center"
+                    android:textColor="#8D8D8D"
+                    android:textSize="16dp" />
+
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/card_icon"
+            android:layout_width="100dp"
+            android:layout_height="150dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginRight="10dp"
+            android:alpha="50"
+            app:cardBackgroundColor="#191919"
+            app:cardCornerRadius="10dp">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="10dp"
+                android:paddingBottom="0dp">
+
+                <ImageView
+                    android:id="@+id/card_icon_icon"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_marginLeft="10dp"
+                    android:padding="0dp"
+                    app:srcCompat="@drawable/clear_day" />
+
+                <TextView
+                    android:id="@+id/card_icon_val"
+                    android:layout_width="100dp"
+                    android:layout_height="40dp"
+                    android:gravity="center"
+                    android:layout_marginTop="90dp"
+                    android:text="partly-cloudy-night"
+                    android:textAlignment="center"
+                    android:textColor="#8D8D8D"
+                    android:textSize="16dp" />
+
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/card_humidity"
+            android:layout_width="100dp"
+            android:layout_height="150dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginRight="10dp"
+            android:alpha="50"
+            app:cardBackgroundColor="#191919"
+            app:cardCornerRadius="10dp">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="10dp"
+                android:paddingBottom="0dp">
+
+                <ImageView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginLeft="20dp"
+                    android:padding="0dp"
+                    app:srcCompat="@drawable/card_humidity" />
+
+                <TextView
+                    android:id="@+id/card_humidity_val"
+                    android:layout_width="100dp"
+                    android:layout_height="30dp"
+                    android:gravity="center"
+                    android:layout_marginTop="60dp"
+                    android:text="T42%"
+                    android:textAlignment="center"
+                    android:textColor="#FFFFFF"
+                    android:textSize="16dp" />
+
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="40dp"
+                    android:gravity="center"
+                    android:layout_marginTop="90dp"
+                    android:text="Humidity"
+                    android:textAlignment="center"
+                    android:textColor="#8D8D8D"
+                    android:textSize="16dp" />
+
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="170dp"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/card_visibility"
+            android:layout_width="100dp"
+            android:layout_height="150dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginRight="10dp"
+            android:alpha="50"
+            app:cardBackgroundColor="#191919"
+            app:cardCornerRadius="10dp">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="10dp"
+                android:paddingBottom="0dp">
+
+                <ImageView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginLeft="20dp"
+                    android:padding="0dp"
+                    app:srcCompat="@drawable/card_visibility" />
+
+                <TextView
+                    android:id="@+id/card_visibility_val"
+                    android:layout_width="100dp"
+                    android:layout_height="30dp"
+                    android:gravity="center"
+                    android:layout_marginTop="60dp"
+                    android:text="T6.30km"
+                    android:textAlignment="center"
+                    android:textColor="#FFFFFF"
+                    android:textSize="16dp" />
+
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="40dp"
+                    android:gravity="center"
+                    android:layout_marginTop="90dp"
+                    android:text="Visibility"
+                    android:textAlignment="center"
+                    android:textColor="#8D8D8D"
+                    android:textSize="16dp" />
+
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/card_cloud_cover"
+            android:layout_width="100dp"
+            android:layout_height="150dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginRight="10dp"
+            android:alpha="50"
+            app:cardBackgroundColor="#191919"
+            app:cardCornerRadius="10dp">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="10dp"
+                android:paddingBottom="0dp">
+
+                <ImageView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginLeft="20dp"
+                    android:padding="0dp"
+                    app:srcCompat="@drawable/card_cloud_cover" />
+
+                <TextView
+                    android:id="@+id/card_cloud_cover_val"
+                    android:layout_width="100dp"
+                    android:layout_height="30dp"
+                    android:gravity="center"
+                    android:layout_marginTop="60dp"
+                    android:text="T3%"
+                    android:textAlignment="center"
+                    android:textColor="#FFFFFF"
+                    android:textSize="16dp" />
+
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="40dp"
+                    android:gravity="center"
+                    android:layout_marginTop="90dp"
+                    android:text="Cloud Cover"
+                    android:textAlignment="center"
+                    android:textColor="#8D8D8D"
+                    android:textSize="16dp" />
+
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/card_ozone"
+            android:layout_width="100dp"
+            android:layout_height="150dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginRight="10dp"
+            android:alpha="50"
+            app:cardBackgroundColor="#191919"
+            app:cardCornerRadius="10dp">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="10dp"
+                android:paddingBottom="0dp">
+
+                <ImageView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginLeft="20dp"
+                    android:padding="0dp"
+                    app:srcCompat="@drawable/card_ozone" />
+
+                <TextView
+                    android:id="@+id/card_ozone_val"
+                    android:layout_width="100dp"
+                    android:layout_height="30dp"
+                    android:gravity="center"
+                    android:layout_marginTop="60dp"
+                    android:text="T318.60 DU"
+                    android:textAlignment="center"
+                    android:textColor="#FFFFFF"
+                    android:textSize="16dp" />
+
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="40dp"
+                    android:gravity="center"
+                    android:layout_marginTop="90dp"
+                    android:text="Ozone"
+                    android:textAlignment="center"
+                    android:textColor="#8D8D8D"
+                    android:textSize="16dp" />
+
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
+
+    </LinearLayout>
+
+</LinearLayout>

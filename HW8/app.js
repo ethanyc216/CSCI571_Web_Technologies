@@ -61,7 +61,7 @@ app.get('/weather', function (req, res) {
         });
 
     });
-    console.log("current GET");
+    console.log("weather GET");
 })
 
 app.get('/seal', function (req, res) {
@@ -83,7 +83,7 @@ app.get('/seal', function (req, res) {
         });
 
     });
-    console.log("current GET");
+    console.log("seal GET");
 })
 
 app.get('/modal', function (req, res) {
@@ -108,7 +108,7 @@ app.get('/modal', function (req, res) {
         });
 
     });
-    console.log("current GET");
+    console.log("modal GET");
 })
 
 app.get('/geo', function (req, res) {
@@ -134,7 +134,51 @@ app.get('/geo', function (req, res) {
         });
 
     });
-    console.log("current GET");
+    console.log("geo GET");
+})
+
+app.get('/geoCity', function (req, res) {
+    res.setHeader("Content-Type","text/plain");
+    res.setHeader("Access-Control-Allow-Origin","*");
+    var params = url.parse(req.url, true).query;
+
+    var url_text = 'https://maps.googleapis.com/maps/api/geocode/json?address='
+                 + params.city
+                 + '&key=AIzaSyBSDUpJbxH_8u5SyNgPR76wEqoirG0yKhg';
+                 
+    https.get(url_text, function(req2,res2){
+        var res_text = "";
+        req2.on('data', function(data){
+            res_text+=data;
+        });
+        req2.on('end', function(){
+            return res.send(res_text);
+        });
+
+    });
+    console.log("geoCity GET");
+})
+
+app.get('/photo', function (req, res) {
+    res.setHeader("Content-Type","text/plain");
+    res.setHeader("Access-Control-Allow-Origin","*");
+    var params = url.parse(req.url, true).query;
+
+    var url_text = 'https://www.googleapis.com/customsearch/v1?q='
+                 + params.city
+                 + '&cx=002930201954421587923:cgyoboerh2r&imgSize=large&imgType=news&num=8&searchType=image&key=AIzaSyBSDUpJbxH_8u5SyNgPR76wEqoirG0yKhg';
+                 
+    https.get(url_text, function(req2,res2){
+        var res_text = "";
+        req2.on('data', function(data){
+            res_text+=data;
+        });
+        req2.on('end', function(){
+            return res.send(res_text);
+        });
+
+    });
+    console.log("photo GET");
 })
 
 /*
