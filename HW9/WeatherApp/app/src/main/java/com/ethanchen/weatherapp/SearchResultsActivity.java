@@ -1,13 +1,19 @@
 package com.ethanchen.weatherapp;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -24,8 +30,12 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Set;
 
 public class SearchResultsActivity extends AppCompatActivity {
+
+    private SharedPreferences mPreferences;
+    private SharedPreferences.Editor mEditor;
 
     private Intent intent;
     private String cityName;
@@ -44,11 +54,16 @@ public class SearchResultsActivity extends AppCompatActivity {
 
     private ListView search_third_card_list;
 
+    private FloatingActionButton fab;
+
     private DateFormat dateFormat;
+    private Context context;
 
     private double lat = 0.0;
     private double lng = 0.0;
     private RequestQueue requestQueue;
+
+    private LinearLayout progressBar_lay3;
 
 
     @Override
@@ -56,8 +71,14 @@ public class SearchResultsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_results);
 
+        progressBar_lay3 = findViewById(R.id.progressBar_lay3);
+        progressBar_lay3.setVisibility(View.VISIBLE);
+
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        mPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        mEditor = mPreferences.edit();
 
         intent = getIntent();
         cityName = intent.getStringExtra("cityName");
@@ -65,6 +86,8 @@ public class SearchResultsActivity extends AppCompatActivity {
         setTitle(cityName);
 
         dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+
+        context = getApplicationContext();
 
         search_first_card_icon = findViewById(R.id.search_first_card_icon);
         search_first_card_temperature = findViewById(R.id.search_first_card_temperature);
@@ -77,6 +100,96 @@ public class SearchResultsActivity extends AppCompatActivity {
         search_second_card_pressure = findViewById(R.id.search_second_card_pressure);
 
         search_third_card_list = findViewById(R.id.search_third_card_list);
+
+        fab = findViewById(R.id.fab);
+
+        String myList = mPreferences.getString("list", "");
+        fab.setImageResource(R.drawable.favorite_add);
+        fab.setTag("add");
+        if (myList.equals("")) {
+        } else {
+            try {
+                JSONArray jsonArray = new JSONArray(myList);
+                for (int i = 0; i < jsonArray.length(); i ++) {
+                    String curCity = jsonArray.getString(i);
+                    if (curCity.equals(cityName)) {
+                        fab.setImageResource(R.drawable.favorite_remove);
+                        fab.setTag("remove");
+                        break;
+                    } else {
+                    }
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (fab.getTag().equals("add")) {
+                    fab.setImageResource(R.drawable.favorite_remove);
+                    fab.setTag("remove");
+
+                    String myList = mPreferences.getString("list", "");
+                    if (myList.equals("")) {
+                        JSONArray jsonArray = new JSONArray();
+                        jsonArray.put(cityName);
+                        mEditor.putString("list", jsonArray.toString());
+                        mEditor.commit();
+                    } else {
+                        try {
+                            JSONArray jsonArray = new JSONArray(myList);
+                            jsonArray.put(cityName);
+                            mEditor.putString("list", jsonArray.toString());
+                            mEditor.commit();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    mEditor.putString(cityName+"_lat", String.valueOf(lat));
+                    mEditor.commit();
+                    mEditor.putString(cityName+"_lng", String.valueOf(lng));
+                    mEditor.commit();
+
+                    Toast.makeText(context, cityName + " was added to favorites", Toast.LENGTH_LONG).show();
+                } else {
+                    fab.setImageResource(R.drawable.favorite_add);
+                    fab.setTag("add");
+
+                    String myList = mPreferences.getString("list", "");
+                    if (myList.equals("")) {
+                        mEditor.putString("list", "");
+                        mEditor.commit();
+                    } else {
+                        try {
+                            JSONArray newJsonArray = new JSONArray();
+                            JSONArray jsonArray = new JSONArray(myList);
+                            for (int i = 0; i < jsonArray.length(); i ++) {
+                                String curCity = jsonArray.getString(i);
+                                if (curCity.equals(cityName)) {
+                                } else {
+                                    newJsonArray.put(curCity);
+                                }
+                            }
+                            mEditor.putString("list", newJsonArray.toString());
+                            mEditor.commit();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    mEditor.remove(cityName+"_lat");
+                    mEditor.commit();
+                    mEditor.remove(cityName+"_lng");
+                    mEditor.commit();
+
+                    Toast.makeText(context, cityName + " was removed from favorites", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
 
         search_first_card_city.setText(cityName);
 
@@ -93,6 +206,12 @@ public class SearchResultsActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+    }
+
 
     private void jsonParseCity(String cityName) {
         String url = "http://csci571hw7nodejs-env.huttzh528b.us-east-2.elasticbeanstalk.com/geoCity?city="+cityName;
@@ -238,6 +357,8 @@ public class SearchResultsActivity extends AppCompatActivity {
 
                     DailyListAdapter adapter = new DailyListAdapter(SearchResultsActivity.this, R.layout.third_card_list_item_layout, dailyItems);
                     search_third_card_list.setAdapter(adapter);
+
+                    progressBar_lay3.setVisibility(View.GONE);
 
 
                 } catch (JSONException e) {

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,14 +8,18 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:text="Search Result"
-        android:textColor="#a8a8a8"
-        android:textSize="20dp" />
+        android:layout_height="match_parent"
+        android:background="#000000"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="Search Result"
+            android:textColor="#a8a8a8"
+            android:textSize="16dp" />
 
     <LinearLayout
         android:id="@+id/search_first_card_layout"
@@ -29,7 +33,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="0dp"
+            android:layout_marginTop="10dp"
             android:layout_marginRight="10dp"
             android:alpha="50"
             android:onClick="goToTabs"
@@ -237,11 +241,12 @@
         </android.support.v7.widget.CardView>
     </LinearLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/search_third_card_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+
         <android.support.v7.widget.CardView
             android:id="@+id/search_third_card"
             android:layout_width="match_parent"
@@ -260,12 +265,51 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:divider="#2F303A"
-                android:dividerHeight="1dip">>
+                android:dividerHeight="1dip">
             </ListView>
 
         </android.support.v7.widget.CardView>
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|bottom"
+            android:src="@drawable/favorite_add"
+            android:contentDescription="submit"
+            android:layout_marginTop="290dp"
+            android:layout_marginLeft="350dp"
+            android:tag="add"/>
 
+    </RelativeLayout>
     </LinearLayout>
 
 
-</LinearLayout>
+    <LinearLayout
+        android:id="@+id/progressBar_lay3"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:background="#000000"
+        android:visibility="gone">
+
+        <ProgressBar
+            android:id="@+id/progressBar3"
+            android:indeterminateDrawable="@drawable/progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerInParent="true"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
+            android:layout_marginLeft="0dp"
+            android:text="Fetching Weather"
+            android:textColor="#FFFFFF"
+            android:textSize="16dp"
+            android:textAlignment="center"/>
+    </LinearLayout>
+
+
+</RelativeLayout>

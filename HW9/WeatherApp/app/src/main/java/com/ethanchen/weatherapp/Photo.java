@@ -101,6 +101,7 @@ public class Photo extends Fragment {
 
                     mAdapter = new PhotoItemAdapter(getActivity(), itemList);
                     mRecyclerView.setAdapter(mAdapter);
+                    getActivity().findViewById(R.id.progressBar_lay2).setVisibility(View.GONE);
 
 
                 } catch (JSONException e) {

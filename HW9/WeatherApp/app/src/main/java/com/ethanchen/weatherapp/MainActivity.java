@@ -3,6 +3,7 @@ package com.ethanchen.weatherapp;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Address;
@@ -11,7 +12,10 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Handler;
 import android.os.Message;
+import android.preference.PreferenceManager;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -26,7 +30,9 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -50,11 +56,18 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements CityProvider {
 
-    private ArrayList<JSONObject> FavDataJson;
-    private ArrayList<String> FavDataCity;
-    private ArrayList<String> FavDataTemperature;
+    private int resNum = 0;
+
+    private ProgressBar spinner;
+    private LinearLayout l_main;
+    private LinearLayout progressBar_lay1;
+    private SharedPreferences mPreferences;
+    private SharedPreferences.Editor mEditor;
+    private MainPageAdapter adapter;
+
+    private Map<String, Integer> currentFav;
 
     private Map<String, String> states;
     private AutoCompleteAdapter autoCompleteAdapter;
@@ -62,24 +75,17 @@ public class MainActivity extends AppCompatActivity {
     private static final int TRIGGER_AUTO_COMPLETE = 100;
     private static final long AUTO_COMPLETE_DELAY = 300;
 
-    private ImageView first_card_icon;
-    private TextView first_card_temperature;
-    private TextView first_card_summary;
-    private TextView first_card_city;
-
-    private TextView second_card_humidity;
-    private TextView second_card_wind;
-    private TextView second_card_visibility;
-    private TextView second_card_pressure;
-
-    private ListView third_card_list;
-
-    private DateFormat dateFormat;
-
+    String cityName;
     private double lat = 0.0;
     private double lng = 0.0;
-    private RequestQueue requestQueue;
 
+    private Bundle bundle;
+
+    private TabLayout tabLayout;
+    private ViewPager viewPager;
+    String myList;
+
+    private ArrayList<String> mEntries = new ArrayList<String>();
 
     Location gpsLoc = null, networkLoc = null;
 
@@ -88,10 +94,19 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        FavDataJson = new ArrayList<>();
-        FavDataCity = new ArrayList<>();
-        FavDataTemperature = new ArrayList<>();
+        ActivityCompat.requestPermissions(this,
+                new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
+                        Manifest.permission.ACCESS_COARSE_LOCATION,
+                        Manifest.permission.ACCESS_NETWORK_STATE,
+                        Manifest.permission.INTERNET}, 1);
 
+        //spinner = (ProgressBar)findViewById(R.id.progressBar1);
+        //l_main = findViewById(R.id.l_main);
+        progressBar_lay1 = findViewById(R.id.progressBar_lay1);
+        progressBar_lay1.setVisibility(View.VISIBLE);
+        mEntries.add("cur");
+
+        currentFav = new HashMap<>();
         states = new HashMap<>();
         states.put("Alabama","AL");
         states.put("Alaska","AK");
@@ -165,40 +180,162 @@ public class MainActivity extends AppCompatActivity {
         states.put("Wyoming","WY");
         states.put("Yukon Territory","YT");
 
-        dateFormat = new SimpleDateFormat("MM/dd/yyyy");
-
-        first_card_icon = findViewById(R.id.first_card_icon);
-        first_card_temperature = findViewById(R.id.first_card_temperature);
-        first_card_summary = findViewById(R.id.first_card_summary);
-        first_card_city = findViewById(R.id.first_card_city);
-
-        second_card_humidity = findViewById(R.id.second_card_humidity);
-        second_card_wind = findViewById(R.id.second_card_wind);
-        second_card_visibility = findViewById(R.id.second_card_visibility);
-        second_card_pressure = findViewById(R.id.second_card_pressure);
-
-        third_card_list = findViewById(R.id.third_card_list);
+        mPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        mEditor = mPreferences.edit();
+        adapter = new MainPageAdapter(getSupportFragmentManager(), this);
 
         LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        ActivityCompat.requestPermissions(this,
-                new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
-                        Manifest.permission.ACCESS_COARSE_LOCATION,
-                        Manifest.permission.ACCESS_NETWORK_STATE,
-                        Manifest.permission.INTERNET}, 1);
 
         gpsLoc = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
         networkLoc = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
 
         lat = gpsLoc.getLatitude();
         lng = gpsLoc.getLongitude();
-        String city = getCityFromGeo(lat, lng);
-        first_card_city.setText(city);
-        FavDataCity.add(city);
+        cityName = getCityFromGeo(lat, lng);
 
-        requestQueue = Volley.newRequestQueue(this);
-        jsonParse(lat, lng);
+
+        viewPager = (ViewPager) findViewById(R.id.mainpage);
+        tabLayout = (TabLayout) findViewById(R.id.tabDots);
+        viewPager.setOffscreenPageLimit(10);
+        viewPager.setAdapter(adapter);
+        setupViewPager(viewPager);
+        tabLayout.setupWithViewPager(viewPager, true);
 
     }
+
+    private void refreshViewPager(ViewPager viewPager) {
+        /*
+
+        String myList = mPreferences.getString("list", "");
+        Map<String, Integer> newCurrentFav = new HashMap<>();
+        if (myList.equals("")) {
+        } else {
+            try {
+                JSONArray jsonArray = new JSONArray(myList);
+                for (int i = 0; i < jsonArray.length(); i ++) {
+                    String curCity = jsonArray.getString(i);
+                    if (currentFav.containsKey(curCity)) {
+                        newCurrentFav.put(curCity, i);
+                    } else{
+                        newCurrentFav.put(curCity, i);
+                        //Toast.makeText(this, curCity, Toast.LENGTH_LONG).show();
+                        String curLat = mPreferences.getString(curCity + "_lat", "");
+                        String curLng = mPreferences.getString(curCity + "_lng", "");
+                        FavoriteCity favoriteCity = new FavoriteCity();
+                        bundle = new Bundle();
+                        bundle.putString("cityName", curCity);
+                        bundle.putString("lat", curLat);
+                        bundle.putString("lng", curLng);
+                        favoriteCity.setArguments(bundle);
+                        adapter.addFragment(favoriteCity, curCity);
+                        adapter.notifyDataSetChanged();
+                    }
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        for (Map.Entry<String,Integer> entry : currentFav.entrySet()) {
+            String favName = entry.getKey();
+            int favPos = entry.getValue();
+            if (newCurrentFav.containsKey(favName)) {
+            } else {
+                adapter.notifyChangeInPosition(1);
+                adapter.removeFragment(favPos+1);
+                adapter.notifyDataSetChanged();
+            }
+
+        }
+        //adapter.notifyDataSetChanged();
+        currentFav = newCurrentFav;
+
+         */
+        String myList = mPreferences.getString("list", "");
+        boolean change = false;
+        if (myList.equals("")) {
+        } else {
+            try {
+                JSONArray jsonArray = new JSONArray(myList);
+                if (jsonArray.length()+1 == mEntries.size()) {
+                    change = false;
+                } else {
+                    change = true;
+                    mEntries = new ArrayList<>();
+                    mEntries.add("cur");
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        String curCity = jsonArray.getString(i);
+                        mEntries.add(curCity);
+                    }
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        if (change) {
+            progressBar_lay1.setVisibility(View.VISIBLE);
+            adapter.notifyChangeInPosition(1);
+            adapter.notifyDataSetChanged();
+        } else if (resNum > 2) {
+            progressBar_lay1.setVisibility(View.GONE);
+        }
+    }
+
+    private void setupViewPager(ViewPager viewPager) {
+
+        /*
+        CurrentCity currentCity = new CurrentCity();
+        bundle = new Bundle();
+        currentCity.setArguments(bundle);
+        adapter.addFragment(currentCity, cityName);
+
+        String myList = mPreferences.getString("list", "");
+        if (myList.equals("")) {
+        } else {
+            try {
+                JSONArray jsonArray = new JSONArray(myList);
+                for (int i = 0; i < jsonArray.length(); i ++) {
+                    String curCity = jsonArray.getString(i);
+                    currentFav.put(curCity, i);
+                    //Toast.makeText(this, curCity, Toast.LENGTH_LONG).show();
+                    String curLat = mPreferences.getString(curCity + "_lat", "");
+                    String curLng = mPreferences.getString(curCity + "_lng", "");
+                    FavoriteCity favoriteCity = new FavoriteCity();
+                    bundle = new Bundle();
+                    bundle.putString("cityName", curCity);
+                    bundle.putString("lat", curLat);
+                    bundle.putString("lng", curLng);
+                    favoriteCity.setArguments(bundle);
+                    adapter.addFragment(favoriteCity, curCity);
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        adapter.notifyDataSetChanged();
+        //viewPager.setAdapter(adapter);
+
+         */
+        myList = mPreferences.getString("list", "");
+        if (myList.equals("")) {
+        } else {
+            try {
+                JSONArray jsonArray = new JSONArray(myList);
+                for (int i = 0; i < jsonArray.length(); i ++) {
+                    String curCity = jsonArray.getString(i);
+                    currentFav.put(curCity, i+1);
+                    mEntries.add(curCity);
+                    adapter.notifyDataSetChanged();
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
@@ -210,156 +347,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private String getCityFromGeo(double lat, double lng) {
-        Geocoder geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
-        try {
-            List<Address> addresses = geocoder.getFromLocation(lat, lng, 1);
-            if (addresses != null && addresses.size() > 0) {
-                String city = addresses.get(0).getLocality();
-                String state = addresses.get(0).getAdminArea();
-                String country = addresses.get(0).getCountryCode();
-                if (states.containsKey(state)) {
-                    return city + ", " + states.get(state) + ", " + country;
-                } else {
-                    return city + ", " + country;
-                }
-            }
-            return null;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    private void jsonParse(double lat, double lng) {
-        String url = "http://csci571hw7nodejs-env.huttzh528b.us-east-2.elasticbeanstalk.com/weather?latitude="+String.valueOf(lat)+"&longitude="+String.valueOf(lng);
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-            try {
-                FavDataJson.add(response);
-                JSONObject currentlyObj = response.getJSONObject("currently");
-                JSONObject dailyObj = response.getJSONObject("daily");
-
-                String currentlyIcon = currentlyObj.getString("icon");
-                int currentlyTemperature = (int) Math.round(currentlyObj.getDouble("temperature"));
-                String currentlyTemperatureString = currentlyTemperature + "°F";
-                FavDataTemperature.add(currentlyTemperatureString);
-                String currentlySummary = currentlyObj.getString("summary");
-
-                int currentlyHumidity =  (int) Math.round(currentlyObj.getDouble("humidity") * 100);
-                String currentlyHumidityString = currentlyHumidity + "%";
-                double currentlyWindSpeed = currentlyObj.getDouble("windSpeed");
-                String currentlyWindSpeedString =  String.format("%.2f", currentlyWindSpeed) + " mph";
-                double currentlyVisibility = currentlyObj.getDouble("visibility");
-                String currentlyVisibilityString =  String.format("%.2f", currentlyVisibility) + " km";
-                double currentlyPressure = currentlyObj.getDouble("pressure");
-                String currentlyPressureString =  String.format("%.2f", currentlyPressure) + " mb";
-
-                JSONArray dailyDataArray = dailyObj.getJSONArray("data");
-                //ArrayList<String> dailyDate = new ArrayList<>();
-                //ArrayList<String> dailyIcon = new ArrayList<>();
-                //ArrayList<String> dailyTemperatureLow = new ArrayList<>();
-                //ArrayList<String> dailyTemperatureHigh = new ArrayList<>();
-                ArrayList<DailyItem> dailyItems = new ArrayList<>();
-
-                for (int i = 0; i < dailyDataArray.length(); i++) {
-                    JSONObject dayInfo = dailyDataArray.getJSONObject(i);
-                    long dayTime = dayInfo.getInt("time");
-                    Date date = new Date(dayTime * 1000);
-                    String dateString = dateFormat.format(date);
-                    String dayIcon = dayInfo.getString("icon");
-                    int dayTemperatureLow = (int) Math.round(dayInfo.getDouble("temperatureLow"));
-                    String dayTemperatureLowString =  String.valueOf(dayTemperatureLow);
-                    int daytemperatureHigh = (int) Math.round(dayInfo.getDouble("temperatureHigh"));
-                    String daytemperatureHighString =  String.valueOf(daytemperatureHigh);
-                    //dailyDate.add(dateString);
-                    //dailyIcon.add(dayIcon);
-                    //dailyTemperatureLow.add(dayTemperatureLowString);
-                    //dailyTemperatureHigh.add(daytemperatureHighString);
-
-                    if (dayIcon.equals("clear-night")) {
-                        DailyItem dailyItem = new DailyItem(dateString, R.drawable.clear_night, dayTemperatureLowString, daytemperatureHighString);
-                        dailyItems.add(dailyItem);
-                    } else if (dayIcon.equals("rain")) {
-                        DailyItem dailyItem = new DailyItem(dateString, R.drawable.rain, dayTemperatureLowString, daytemperatureHighString);
-                        dailyItems.add(dailyItem);
-                    } else if (dayIcon.equals("sleet")) {
-                        DailyItem dailyItem = new DailyItem(dateString, R.drawable.sleet, dayTemperatureLowString, daytemperatureHighString);
-                        dailyItems.add(dailyItem);
-                    } else if (dayIcon.equals("snow")) {
-                        DailyItem dailyItem = new DailyItem(dateString, R.drawable.snow, dayTemperatureLowString, daytemperatureHighString);
-                        dailyItems.add(dailyItem);
-                    } else if (dayIcon.equals("wind")) {
-                        DailyItem dailyItem = new DailyItem(dateString, R.drawable.wind, dayTemperatureLowString, daytemperatureHighString);
-                        dailyItems.add(dailyItem);
-                    } else if (dayIcon.equals("fog")) {
-                        DailyItem dailyItem = new DailyItem(dateString, R.drawable.fog, dayTemperatureLowString, daytemperatureHighString);
-                        dailyItems.add(dailyItem);
-                    } else if (dayIcon.equals("cloudy")) {
-                        DailyItem dailyItem = new DailyItem(dateString, R.drawable.cloudy, dayTemperatureLowString, daytemperatureHighString);
-                        dailyItems.add(dailyItem);
-                    } else if (dayIcon.equals("partly-cloudy-night")) {
-                        DailyItem dailyItem = new DailyItem(dateString, R.drawable.partly_cloudy_night, dayTemperatureLowString, daytemperatureHighString);
-                        dailyItems.add(dailyItem);
-                    } else if (dayIcon.equals("partly-cloudy-day")) {
-                        DailyItem dailyItem = new DailyItem(dateString, R.drawable.partly_cloudy_day, dayTemperatureLowString, daytemperatureHighString);
-                        dailyItems.add(dailyItem);
-                    } else {
-                        DailyItem dailyItem = new DailyItem(dateString, R.drawable.clear_day, dayTemperatureLowString, daytemperatureHighString);
-                        dailyItems.add(dailyItem);
-                    }
-                }
-
-
-                if (currentlyIcon.equals("clear-night")) {
-                    first_card_icon.setImageResource(R.drawable.clear_night);
-                } else if (currentlyIcon.equals("rain")) {
-                    first_card_icon.setImageResource(R.drawable.rain);
-                } else if (currentlyIcon.equals("sleet")) {
-                    first_card_icon.setImageResource(R.drawable.sleet);
-                } else if (currentlyIcon.equals("snow")) {
-                    first_card_icon.setImageResource(R.drawable.snow);
-                } else if (currentlyIcon.equals("wind")) {
-                    first_card_icon.setImageResource(R.drawable.wind);
-                } else if (currentlyIcon.equals("fog")) {
-                    first_card_icon.setImageResource(R.drawable.fog);
-                } else if (currentlyIcon.equals("cloudy")) {
-                    first_card_icon.setImageResource(R.drawable.cloudy);
-                } else if (currentlyIcon.equals("partly-cloudy-night")) {
-                    first_card_icon.setImageResource(R.drawable.partly_cloudy_night);
-                } else if (currentlyIcon.equals("partly-cloudy-day")) {
-                    first_card_icon.setImageResource(R.drawable.partly_cloudy_day);
-                } else {
-                    first_card_icon.setImageResource(R.drawable.clear_day);
-                }
-
-                first_card_temperature.setText(currentlyTemperatureString);
-                first_card_summary.setText(currentlySummary);
-
-                second_card_humidity.setText(currentlyHumidityString);
-                second_card_wind.setText(currentlyWindSpeedString);
-                second_card_visibility.setText(currentlyVisibilityString);
-                second_card_pressure.setText(currentlyPressureString);
-
-                DailyListAdapter adapter = new DailyListAdapter(MainActivity.this, R.layout.third_card_list_item_layout, dailyItems);
-                third_card_list.setAdapter(adapter);
-
-
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
-            }
-        });
-
-        requestQueue.add(request);
-
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu)  {
@@ -414,6 +401,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent myIntent = new Intent(MainActivity.this, SearchResultsActivity.class);
                 myIntent.putExtra("cityName", query);
                 startActivity(myIntent);
+                //progressBar_lay1.setVisibility(View.VISIBLE);
                 return false;
             }
 
@@ -458,13 +446,62 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void goToTabs(View view) {
-        Intent myIntent = new Intent(this, TabsActivity.class);
-        //TODO
-        myIntent.putExtra("weatherJson", FavDataJson.get(0).toString());
-        myIntent.putExtra("cityName", FavDataCity.get(0));
-        myIntent.putExtra("cityTemperature", FavDataTemperature.get(0));
-        startActivity(myIntent);
+    private String getCityFromGeo(double lat, double lng) {
+        Geocoder geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
+        try {
+            List<Address> addresses = geocoder.getFromLocation(lat, lng, 1);
+            if (addresses != null && addresses.size() > 0) {
+                String city = addresses.get(0).getLocality();
+                String state = addresses.get(0).getAdminArea();
+                String country = addresses.get(0).getCountryCode();
+                if (states.containsKey(state)) {
+                    return city + ", " + states.get(state) + ", " + country;
+                } else {
+                    return city + ", " + country;
+                }
+            }
+            return null;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        resNum += 1;
+        progressBar_lay1.setVisibility(View.VISIBLE);
+        String newmyList = mPreferences.getString("list", "");
+        refreshViewPager(viewPager);
+        /*
+        if (myList.equals(newmyList)) {
+            //progressBar_lay1.setVisibility(View.GONE);
+        }
+        else {
+            refreshViewPager(viewPager);
+            //finish();
+            //startActivity(getIntent());
+        }
+
+         */
+    }
+
+    @Override
+    public String getCityForPosition(int position) {
+        return mEntries.get(position);
+    }
+    @Override
+    public int getCount() {
+        return mEntries.size();
+    }
+
+    public void removeCity() {
+        progressBar_lay1.setVisibility(View.VISIBLE);
+        int position = viewPager.getCurrentItem();
+        mEntries.remove(position);
+        adapter.notifyChangeInPosition(1);
+        adapter.notifyDataSetChanged();
     }
 
 }

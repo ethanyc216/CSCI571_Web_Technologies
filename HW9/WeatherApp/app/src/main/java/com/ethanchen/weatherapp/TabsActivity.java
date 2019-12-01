@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 
 import com.chabbal.slidingdotsplash.ViewPagerAdapter;
 
@@ -22,6 +23,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class TabsActivity extends AppCompatActivity {
+
+    private LinearLayout progressBar_lay2;
 
     private Intent intent;
     private String jsonString;
@@ -40,10 +43,15 @@ public class TabsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tabs);
 
+        progressBar_lay2 = findViewById(R.id.progressBar_lay2);
+        progressBar_lay2.setVisibility(View.VISIBLE);
+
         intent = getIntent();
         jsonString = intent.getStringExtra("weatherJson");
         cityName = intent.getStringExtra("cityName");
         cityTemperature = intent.getStringExtra("cityTemperature");
+
+
 
         bundle = new Bundle();
         bundle.putString("weatherJson", jsonString);
@@ -87,7 +95,6 @@ public class TabsActivity extends AppCompatActivity {
 
         switch (item.getItemId()) {
             case R.id.twitter:
-                //TODO
                 shareTwitter(cityName, cityTemperature);
                 return true;
             case android.R.id.home:

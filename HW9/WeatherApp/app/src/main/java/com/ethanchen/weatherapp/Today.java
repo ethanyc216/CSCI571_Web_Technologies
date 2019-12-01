@@ -12,15 +12,31 @@ import android.widget.TextView;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Today extends Fragment {
 
     private static final String TAG = "Today";
+    private Map<String, String> icons;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_today, container, false);
+
+        icons = new HashMap<>();
+        icons.put("clear-day","clear day");
+        icons.put("clear-night","clear night");
+        icons.put("rain","rain");
+        icons.put("snow","snow");
+        icons.put("sleet","sleet");
+        icons.put("wind","wind");
+        icons.put("fog","fog");
+        icons.put("cloudy","cloudy");
+        icons.put("partly-cloudy-day","cloudy day");
+        icons.put("partly-cloudy-night","cloudy night");
 
         TextView card_wind_val = view.findViewById(R.id.card_wind_val);
         TextView card_pressure_val = view.findViewById(R.id.card_pressure_val);
@@ -43,32 +59,64 @@ public class Today extends Fragment {
             weatherJson = new JSONObject(weatherJsonString);
             JSONObject currentlyObj = weatherJson.getJSONObject("currently");
 
-            double currentlyWindSpeed = currentlyObj.getDouble("windSpeed");
-            String currentlyWindSpeedString =  String.format("%.2f", currentlyWindSpeed) + " mph";
-            double currentlyPressure = currentlyObj.getDouble("pressure");
-            String currentlyPressureString =  String.format("%.2f", currentlyPressure) + " mb";
-            double currentlyRain = currentlyObj.getDouble("precipIntensity");
-            String currentlyRainString =  String.format("%.2f", currentlyRain) + " mmph";
+            String currentlyWindSpeedString = "N/A";
+            if (currentlyObj.has("windSpeed")) {
+                double currentlyWindSpeed = currentlyObj.getDouble("windSpeed");
+                currentlyWindSpeedString = String.format("%.2f", currentlyWindSpeed) + " mph";
+            }
 
-            int currentlyTemperature = (int) Math.round(currentlyObj.getDouble("temperature"));
-            String currentlyTemperatureString = currentlyTemperature + "°F";
-            String currentlyIcon = currentlyObj.getString("icon");
-            int currentlyHumidity =  (int) Math.round(currentlyObj.getDouble("humidity") * 100);
-            String currentlyHumidityString = currentlyHumidity + "%";
+            String currentlyPressureString = "N/A";
+            if (currentlyObj.has("pressure")) {
+                double currentlyPressure = currentlyObj.getDouble("pressure");
+                currentlyPressureString = String.format("%.2f", currentlyPressure) + " mb";
+            }
+            String currentlyRainString = "N/A";
+            if (currentlyObj.has("precipIntensity")) {
+                double currentlyRain = currentlyObj.getDouble("precipIntensity");
+                currentlyRainString = String.format("%.2f", currentlyRain) + " mmph";
+            }
 
-            double currentlyVisibility = currentlyObj.getDouble("visibility");
-            String currentlyVisibilityString =  String.format("%.2f", currentlyVisibility) + " km";
-            int currentlyCloudCover =  (int) Math.round(currentlyObj.getDouble("cloudCover") * 100);
-            String currentlyCloudCoverString = currentlyCloudCover + "%";
-            double currentlyOzone = currentlyObj.getDouble("ozone");
-            String currentlyOzoneString =  String.format("%.2f", currentlyOzone) + " DU";
+            String currentlyTemperatureString = "N/A";
+            if (currentlyObj.has("temperature")) {
+                int currentlyTemperature = (int) Math.round(currentlyObj.getDouble("temperature"));
+                currentlyTemperatureString = currentlyTemperature + "°F";
+            }
+            String currentlyIcon = "N/A";
+            if (currentlyObj.has("icon")) {
+                currentlyIcon = currentlyObj.getString("icon");
+            }
+            String currentlyHumidityString = "N/A";
+            if (currentlyObj.has("humidity")) {
+                int currentlyHumidity = (int) Math.round(currentlyObj.getDouble("humidity") * 100);
+                currentlyHumidityString = currentlyHumidity + "%";
+            }
+
+            String currentlyVisibilityString = "N/A";
+            if (currentlyObj.has("visibility")) {
+                double currentlyVisibility = currentlyObj.getDouble("visibility");
+                currentlyVisibilityString = String.format("%.2f", currentlyVisibility) + " km";
+            }
+            String currentlyCloudCoverString = "N/A";
+            if (currentlyObj.has("cloudCover")) {
+                int currentlyCloudCover = (int) Math.round(currentlyObj.getDouble("cloudCover") * 100);
+                currentlyCloudCoverString = currentlyCloudCover + "%";
+            }
+            String currentlyOzoneString = "N/A";
+            if (currentlyObj.has("ozone")) {
+                double currentlyOzone = currentlyObj.getDouble("ozone");
+                currentlyOzoneString = String.format("%.2f", currentlyOzone) + " DU";
+            }
 
             card_wind_val.setText(currentlyWindSpeedString);
             card_pressure_val.setText(currentlyPressureString);
             card_rain_val.setText(currentlyRainString);
 
             card_temperature_val.setText(currentlyTemperatureString);
-            card_icon_val.setText(currentlyIcon);
+            if (icons.containsKey(currentlyIcon)) {
+                card_icon_val.setText(icons.get(currentlyIcon));
+            } else {
+                card_icon_val.setText("clear day");
+            }
             card_humidity_val.setText(currentlyHumidityString);
 
             card_visibility_val.setText(currentlyVisibilityString);
@@ -96,6 +144,7 @@ public class Today extends Fragment {
             } else {
                 card_icon_icon.setImageResource(R.drawable.clear_day);
             }
+            //getActivity().findViewById(R.id.progressBar_lay2).setVisibility(View.GONE);
 
         } catch (Exception e) {
             e.printStackTrace();
