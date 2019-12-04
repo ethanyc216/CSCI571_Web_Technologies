@@ -55,10 +55,12 @@
                 <TextView
                     android:id="@+id/first_card_summary"
                     android:layout_width="180dp"
-                    android:layout_height="40dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginLeft="200dp"
                     android:layout_marginTop="40dp"
-                    android:text="TClear"
+                    android:text="TClear TClear TClear TClear TClear TClear TClear TClear TClear TClear "
+                    android:maxLines="2"
+                    android:ellipsize="end"
                     android:textColor="#FFFFFF"
                     android:textSize="20dp" />
 
