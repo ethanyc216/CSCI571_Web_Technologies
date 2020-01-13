@@ -1,2 +1,2 @@
 # CSCI571_Web_Technologies
-Fall 2019
+USC CSCI571 Web Technologies, taught by Dr. Marco Papa, Fall 2019
