@@ -26,7 +26,7 @@
     "@types/jquery": "^3.3.31",
     "bootstrap": "^4.3.1",
     "canvasjs": "^1.8.1",
-    "chart.js": "^2.9.2",
+    "chart.js": "^2.9.4",
     "jquery": "^3.4.1",
     "material-design-icons": "^3.0.1",
     "ng2-charts": "^2.3.0",
